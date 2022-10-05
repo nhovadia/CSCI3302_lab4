@@ -1,4 +1,4 @@
-#VRML_SIM R2023a utf8
+#VRML_SIM R2022b utf8
 
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/factory/containers/protos/CardboardBox.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/floors/protos/RectangleArena.proto"
@@ -19,7 +19,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation 0.6159555782088889 -0.7401352876749765 -0.26981193748912063 3.339883725882079
-  position 0.7680547258270979 1.1566925395365166 1.180577539253383
+  position 0.95587551557454 1.8534833922390668 1.5700425468767187
 }
 TexturedBackground {
 }

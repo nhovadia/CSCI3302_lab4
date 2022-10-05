@@ -65,7 +65,8 @@ lidar.enablePointCloud()
 # array that contains all the angles is to use linspace from
 # the numpy package.
 
-
+LIDAR_reading = []
+angles = np.linespace(0, LIDAR_ANGLE_BINS) #not sure if this is right
 
 #### End of Part 1 #####
  
