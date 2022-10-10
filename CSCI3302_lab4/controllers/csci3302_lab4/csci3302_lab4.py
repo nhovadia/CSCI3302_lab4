@@ -66,7 +66,7 @@ lidar.enablePointCloud()
 # the numpy package.
 
 LIDAR_reading = []
-angles = np.linespace(0, LIDAR_ANGLE_BINS) #not sure if this is right
+angles = np.linespace(0, LIDAR_ANGLE_RANGE, LIDAR_ANGLE_BINS) #not sure if this is right
 
 #### End of Part 1 #####
  
