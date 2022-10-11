@@ -65,7 +65,7 @@ lidar.enablePointCloud()
 # array that contains all the angles is to use linspace from
 # the numpy package.
 
-LIDAR_reading =  lidar.getRangeImage()
+lidar_sensor_readings =  lidar.getRangeImage()
 middle = 10 #array index 10 is the "front" of the robot
 angle_offsets = []
 space_between = LIDAR_ANGLE_RANGE/LIDAR_ANGLE_BINS #in radians
@@ -81,17 +81,12 @@ red   = 0xFF0000
 
 
 #Part 2
-def world_coord_to_map_coord(world_coords):
-    global pose_theta, pose_x, pose_y
+def world_coord_to_map_coord():
+    global pose_x, pose_y
 
-    display.setColor(red)
-    
     x_map = int(pose_x*300)
-    y_map = int(pose_y*300)
-    print(x_map)
-    print(y_map)
-
-    display.drawPixel(x_map + 150, y_map - 100)
+    y_map = int(pose_y*300)   
+    
     return(x_map + 150, y_map - 100)
     
 
@@ -129,15 +124,10 @@ while robot.step(SIM_TIMESTEP) != -1:
     # into coordinates on the map. Draw a red dot using display.drawPixel()
     # where the robot moves.
     
+    #each pixel is 1/300th of a meter in out real world
+    #You can store your pose and draw them last so that they are not hidden by other pixels
+    x_map, y_map = world_coord_to_map_coord()
     
-    display.setColor(red)
-    
-    x_map = int(pose_x*300)
-    y_map = int(pose_y*300)
-    print(x_map)
-    print(y_map)
-
-    display.drawPixel(x_map + 150, y_map - 100)
     
     ##### Part 3: Convert Lidar data into world coordinates
     #
@@ -154,13 +144,19 @@ while robot.step(SIM_TIMESTEP) != -1:
  
     
     for i in range(LIDAR_ANGLE_BINS):
-        display.setColor(blue)
         xx,yy = convert_lidar_reading_to_world_coord(i,lidar_sensor_readings[i])
         if not math.isnan(xx) and not math.isnan(yy):
-            display.drawPixel(int(xx * 300),int(yy * 300))
+            display.setColor(white)
+            x_end = xx * 300 + 150
+            y_end = xx * 300 - 100
+            display.drawLine(int (x_map), int (y_map), int(x_end), int(y_end)) #first filling in blank space
+            display.setColor(blue)
+            display.drawLine(int(x_end), int(y_end), int(x_end*1.1), int(y_end*1.1)) #adding a bit of blue
+            
           
-
-    
+    #drawing the robot pose so it's "ontop" of the other colors
+    display.setColor(red)
+    display.drawPixel(x_map, y_map) #x and y are already offset in method world_coord_to_map_coord
  
 
     
