@@ -153,11 +153,11 @@ while robot.step(SIM_TIMESTEP) != -1:
     ##### Part 4: Draw the obstacle and free space pixels on the map
  
     
-    for j in range(len(lidar_sensor_readings)):
+    for i in range(LIDAR_ANGLE_BINS):
         display.setColor(blue)
         xx,yy = convert_lidar_reading_to_world_coord(i,lidar_sensor_readings[i])
-        if xx and yy is not None:
-            display.drawPixel(int(xx*300),int(yy*300))
+        if not math.isnan(xx) and not math.isnan(yy):
+            display.drawPixel(int(xx * 300),int(yy * 300))
           
 
     
@@ -209,4 +209,4 @@ while robot.step(SIM_TIMESTEP) != -1:
     
     # Feel free to uncomment this for debugging
     
-    print("X: %f Y: %f Theta: %f " % (pose_x,pose_y,pose_theta))
+    #print("X: %f Y: %f Theta: %f " % (pose_x,pose_y,pose_theta))
