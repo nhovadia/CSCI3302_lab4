@@ -78,6 +78,7 @@ blue  = 0x0000FF
 white = 0xFFFFFF
 red   = 0xFF0000
 
+#Part 3
 def convert_lidar_reading_to_world_coord(lidar_bin, lidar_distance): #bin number and distance
     global angle_offsets, pose_theta, pose_x, pose_y
 
