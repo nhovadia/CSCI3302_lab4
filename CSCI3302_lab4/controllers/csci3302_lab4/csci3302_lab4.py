@@ -78,15 +78,33 @@ blue  = 0x0000FF
 white = 0xFFFFFF
 red   = 0xFF0000
 
+
+
+#Part 2
+def world_coord_to_map_coord(world_coords):
+    global pose_theta, pose_x, pose_y
+
+    display.setColor(red)
+    
+    x_map = int(pose_x*300)
+    y_map = int(pose_y*300)
+    print(x_map)
+    print(y_map)
+
+    display.drawPixel(x_map + 150, y_map - 100)
+    return(x_map + 150, y_map - 100)
+    
+
+
 #Part 3
 def convert_lidar_reading_to_world_coord(lidar_bin, lidar_distance): #bin number and distance
     global angle_offsets, pose_theta, pose_x, pose_y
 
-    x_robot = np.cos(angle_offsets[lidar_bin])*lidar_distance
-    y_robot = np.sin(angle_offsets[lidar_bin])*lidar_distance
+    x_robot = math.cos(angle_offsets[lidar_bin])*lidar_distance
+    y_robot = math.sin(angle_offsets[lidar_bin])*lidar_distance
 
-    x_world = np.cos(pose_theta)*x_robot - np.sin(pose_theta)*y_robot + pose_x
-    y_world = np.sin(pose_theta)*x_robot + np.cos(pose_theta)*y_robot + pose_y
+    x_world = math.cos(pose_theta)*x_robot - math.sin(pose_theta)*y_robot + pose_x
+    y_world = math.sin(pose_theta)*x_robot + math.cos(pose_theta)*y_robot + pose_y
 
     return(x_world, y_world)
 
@@ -100,7 +118,7 @@ while robot.step(SIM_TIMESTEP) != -1:
     # Read ground sensors
     for i, gs in enumerate(ground_sensors):
         gsr[i] = gs.getValue()
-    print(gsr)
+    #print(gsr)
     # Read Lidar           
     lidar_sensor_readings = lidar.getRangeImage()
     
@@ -110,9 +128,16 @@ while robot.step(SIM_TIMESTEP) != -1:
     # Come up with a way to turn the robot pose (in world coordinates)
     # into coordinates on the map. Draw a red dot using display.drawPixel()
     # where the robot moves.
-    display.setColor(blue)
-    display.drawLine(0, 20, 200, 200)
-    display.drawPixel(0, 0)
+    
+    
+    display.setColor(red)
+    
+    x_map = int(pose_x*300)
+    y_map = int(pose_y*300)
+    print(x_map)
+    print(y_map)
+
+    display.drawPixel(x_map + 150, y_map - 100)
     
     ##### Part 3: Convert Lidar data into world coordinates
     #
@@ -128,6 +153,11 @@ while robot.step(SIM_TIMESTEP) != -1:
     ##### Part 4: Draw the obstacle and free space pixels on the map
  
     
+    for j in range(len(lidar_sensor_readings)):
+        display.setColor(blue)
+        xx,yy = convert_lidar_reading_to_world_coord(i,lidar_sensor_readings[i])
+        if xx and yy is not None:
+            display.drawPixel(int(xx*300),int(yy*300))
           
 
     
@@ -178,4 +208,5 @@ while robot.step(SIM_TIMESTEP) != -1:
     pose_theta += (dsr-dsl)/EPUCK_AXLE_DIAMETER
     
     # Feel free to uncomment this for debugging
-    #print("X: %f Y: %f Theta: %f " % (pose_x,pose_y,pose_theta))
+    
+    print("X: %f Y: %f Theta: %f " % (pose_x,pose_y,pose_theta))
