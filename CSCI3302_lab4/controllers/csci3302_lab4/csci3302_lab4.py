@@ -65,8 +65,13 @@ lidar.enablePointCloud()
 # array that contains all the angles is to use linspace from
 # the numpy package.
 
-LIDAR_reading = []
-angles = np.linespace(0, LIDAR_ANGLE_RANGE, LIDAR_ANGLE_BINS) #not sure if this is right
+LIDAR_reading =  lidar.getRangeImage()
+middle = 10 #array index 10 is the "front" of the robot
+lidar_offsets = []
+space_between = LIDAR_ANGLE_RANGE/LIDAR_ANGLE_BINS #in radians
+for i in range(LIDAR_ANGLE_BINS):
+    num = (middle - i) * space_between #should get numbers -0.7854 to 0.7854 with 0 being "forward"
+    lidar_offsets.append(num)
 
 #### End of Part 1 #####
  
