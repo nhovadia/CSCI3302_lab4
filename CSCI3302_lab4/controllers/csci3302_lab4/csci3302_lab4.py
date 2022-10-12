@@ -147,16 +147,20 @@ while robot.step(SIM_TIMESTEP) != -1:
         xx,yy = convert_lidar_reading_to_world_coord(i,lidar_sensor_readings[i])
         if not math.isnan(xx) and not math.isnan(yy):
             display.setColor(white)
-            x_end = xx * 300 + 150
-            y_end = xx * 300 - 100
-            display.drawLine(int (x_map), int (y_map), int(x_end), int(y_end)) #first filling in blank space
+            x_end = int(xx * 300 + 150)
+            y_end = int(yy * 300 - 100)
+            #display.drawLine(int (x_map), int (y_map), int(x_end), int(y_end)) #first filling in blank space
+            display.drawLine(x_map, y_map, x_end, y_end)
             display.setColor(blue)
-            display.drawLine(int(x_end), int(y_end), int(x_end*1.1), int(y_end*1.1)) #adding a bit of blue
+            display.drawPixel(x_end, y_end)
+            #display.drawLine(int(x_end), int(y_end), int(x_end*1.2), int(y_end*1.2)) #adding a bit of blue
             
           
     #drawing the robot pose so it's "ontop" of the other colors
     display.setColor(red)
     display.drawPixel(x_map, y_map) #x and y are already offset in method world_coord_to_map_coord
+    display.drawPixel(x_map+1, y_map+1)
+    display.drawPixel(x_map-1, y_map-1)
  
 
     
